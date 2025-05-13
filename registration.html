@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Angkasa Fun Run 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --secondary-color: black;
+            --accent-color: #004d40;
+            --light-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://i.pinimg.com/736x/a8/3c/6d/a83c6d06140d17a9be83e4f025d4e511.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 40px 20px;
+            padding-top: 120px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header img {
+            height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid transparent;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            transform: scale(1.01);
+            outline: none;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), #FFA500);
+            color: var(--secondary-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .submit-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .requirements {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .requirements h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .requirements ul {
+            list-style-type: none;
+        }
+
+        .requirements li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .requirements li:before {
+            content: "•";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .requirements li:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(10px);
+        }
+
+        .form-status > div {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            background: rgba(255, 215, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .thankyou_message {
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .error_message {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            .requirements {
+                padding: 15px;
+            }
+
+            .requirements li {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .contact-detail {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-icon {
+                margin: 0 auto 10px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-links a {
+                display: block;
+                padding: 5px 0;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .container {
+                max-width: 90%;
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            .container {
+                max-width: 95%;
+                padding: 30px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding-top: 80px;
+            }
+
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .nav-menu {
+                top: 60px;
+            }
+
+            .mobile-nav-toggle {
+                padding: 5px;
+            }
+
+            .logo img {
+                height: 45px;
+            }
+
+            .mobile-nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;  /* Fixed width instead of percentage */
+                max-width: 90%; /* Maximum width for very small screens */
+                height: auto;   /* Auto height instead of 100vh */
+                max-height: 400px; /* Maximum height */
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                margin: 60px 10px 0 0; /* Space from top and right */
+                transition: right 0.3s ease;
+                backdrop-filter: blur(10px);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 215, 0, 0.1);
+                box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+                overflow-y: auto; /* Enable scroll if content is too long */
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            body {
+                padding-top: 70px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .container {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            input, select, textarea {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            .requirements {
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .requirements li {
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .footer-links a {
+                font-size: 14px;
+                margin: 0 8px;
+            }
+        }
+
+        @media screen and (max-width: 360px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .requirements h3 {
+                font-size: 18px;
+            }
+        }
+
+        /* Header & Navigation Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo img {
+            height: 45px;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            position: relative;
+        }
+
+        .nav-menu a, .dropdown-button {
+            color: var(--light-color);
+            text-decoration: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active,
+        .dropdown-button:hover {
+            color: var(--primary-color);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 30px;
+            height: 2px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            min-width: 220px;
+            border-radius: 8px;
+            padding: 8px;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.8rem 1.2rem;
+            color: var(--light-color);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 215, 0, 0.15);
+            transform: translateX(5px);
+        }
+
+        .dropdown:hover .dropdown-content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 100;
+            position: fixed;
+            right: 1rem;
+            top: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-toggle:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 300px;  /* Fixed width instead of percentage */
+                max-width: 90%; /* Maximum width for very small screens */
+                height: auto;   /* Auto height instead of 100vh */
+                max-height: 400px; /* Maximum height */
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                margin: 60px 10px 0 0; /* Space from top and right */
+                transition: right 0.3s ease;
+                backdrop-filter: blur(10px);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 215, 0, 0.1);
+                box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+                overflow-y: auto; /* Enable scroll if content is too long */
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-menu a,
+            .dropdown-button {
+                width: 100%;
+                padding: 1rem;
+                text-align: left;
+            }
+
+            .dropdown-content {
+                position: static;
+                background: rgba(255, 255, 255, 0.05);
+                border: none;
+                box-shadow: none;
+                max-height: 0;
+                overflow: hidden;
+                padding: 0;
+                visibility: visible;
+                opacity: 1;
+            }
+
+            .dropdown.active .dropdown-content {
+                max-height: 500px;
+                padding: 0.5rem 0;
+            }
+
+            .dropdown-content a {
+                padding-left: 2.5rem;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.95));
+            backdrop-filter: blur(10px);
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+
+        footer .container {
+            background: transparent;
+            box-shadow: none;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            position: relative;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.2));
+            transition: all 0.3s ease;
+        }
+
+        .footer-logo:hover img {
+            transform: translateY(-2px);
+            filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.3));
+        }
+
+        .footer-logo p {
+            color: var(--light-color);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .footer-links,
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h3::after,
+        .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 30px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a i {
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            transform: translateX(5px);
+            color: var(--primary-color);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--light-color);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: var(--light-color);
+            background: rgba(255, 255, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 215, 0, 0.15);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--light-color);
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .copyright i {
+            color: var(--primary-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @media screen and (max-width: 768px) {
+            footer {
+                padding: 40px 0 30px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-logo,
+            .footer-links,
+            .footer-contact {
+                align-items: center;
+            }
+
+            .footer-links a,
+            .contact-info {
+                justify-content: center;
+            }
+
+            .footer-links h3::after,
+            .footer-contact h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="../img/ANGKASA FUN RUN (4).png" alt="Angkasa Fun Run Logo">
+            </a>
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-button">
+                            Race Info <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="index.html#schedule">Race Schedule</a>
+                            <a href="index.html#requirements">Race Requirements</a>
+                            <a href="index.html#route">Race Route</a>
+                        </div>
+                    </li>
+                    <li><a href="#" class="active">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="header">
+            <img src="../img/ANGKASA FUN RUN (4).png" alt="Angkasa Fun Run Logo">
+            <h1>Form Pendaftaran</h1>
+            <p>Isi formulir di bawah untuk bergabung dengan Angkasa Fun Run 2025</p>
+        </div>
+        <form id="registrationForm" class="gform pure-form pure-form-stacked" method="POST" action="https://script.google.com/macros/s/AKfycbxNlUD4gTcBINlWGDqxgKas4-Vm4tb8dFExo73zAhwJmSc8EVvmyjajidMnIe6t2yWi4w/exec">
+            <div class="form-elements">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName">Nama Lengkap *</label>
+                        <input type="text" id="fullName" name="Nama Lengkap" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Jenis Kelamin *</label>
+                        <select id="gender" name="Jenis Kelamin" required>
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Tanggal Lahir *</label>
+                        <input type="date" id="dob" name="Tanggal Lahir" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="Email" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor HP / WhatsApp *</label>
+                        <input type="tel" id="phone" name="Nomor HP" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="address">Alamat Lengkap *</label>
+                        <textarea id="address" name="Alamat" rows="3" required></textarea>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Jarak Tempuh *</label>
+                        <select id="category" name="Kategori" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="5K Fun Run - Regular">5K Fun Run - Regular (Rp 150.000)</option>
+                            <option value="5K Fun Run - Student">5K Fun Run - Student (Rp 100.000)</option>
+                        </select>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shirtSize">Ukuran Kaos *</label>
+                        <select id="shirtSize" name="Ukuran Kaos" required>
+                            <option value="">Pilih Ukuran</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL (+ Rp 10.000)</option>
+                        </select>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emergencyName">Nama Kontak Darurat *</label>
+                        <input type="text" id="emergencyName" name="Nama Kontak Darurat" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emergencyPhone">Nomor HP Kontak Darurat *</label>
+                        <input type="tel" id="emergencyPhone" name="Nomor HP Darurat" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="medicalHistory">Riwayat Medis</label>
+                        <textarea id="medicalHistory" name="Riwayat Medis" rows="3" placeholder="Sebutkan jika ada riwayat medis penting"></textarea>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-status">
+                <div class="loading">
+                    <span>Mengirim data...</span>
+                    <div class="spinner"></div>
+                </div>
+                <div class="thankyou_message">
+                    <h2>Terima kasih! Pendaftaran Anda telah berhasil!</h2>
+                    <p>Data Anda telah tersimpan. Silakan cek email untuk informasi selanjutnya.</p>
+                </div>
+                <div class="error_message">
+                    <h2>Maaf, terjadi kesalahan!</h2>
+                    <p>Silakan coba lagi dalam beberapa saat.</p>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">
+                <span>Daftar Sekarang</span>
+            </button>
+        </form>
+        <div class="requirements">
+            <h3>Important Notes:</h3>
+            <ul>
+                <li>Registration is only complete after payment is confirmed</li>
+                <li>Please bring valid ID for race pack collection</li>
+                <li>Students must bring valid student ID for verification</li>
+                <li>Medical certificate is required during race pack collection</li>
+                <li>Race pack collection: 31 July - 1 August 2025</li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../img/ANGKASA FUN RUN (4).png" alt="Angkasa Fun Run Logo">
+                    <p>Join us for the most exciting fun run event of 2025! Experience the thrill of running while supporting a great cause.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+                    <a href="index.html#race"><i class="fas fa-running"></i> Race Information</a>
+                    <a href="registration.html"><i class="fas fa-edit"></i> Registration</a>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@angkasafunrun.com</p>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <p>(021) 1234-5678</p>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Jakarta, Indonesia</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Angkasa Fun Run. All rights reserved. Created with <i class="fas fa-heart" style="color: var(--primary-color);"></i></p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function validasi() {
+            let isValid = true;
+            const inputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+            inputs.forEach(input => {
+                const errorDiv = input.nextElementSibling;
+                errorDiv.style.display = 'none';
+                if (!input.value.trim()) {
+                    isValid = false;
+                    errorDiv.textContent = 'Bagian ini wajib diisi';
+                    errorDiv.style.display = 'block';
+                }
+            });
+            return isValid;
+        }
+        const form = document.getElementById('registrationForm');
+        const loading = document.querySelector('.loading');
+        const thankyouMessage = document.querySelector('.thankyou_message');
+        const errorMessage = document.querySelector('.error_message');
+        const submitBtn = document.querySelector('.submit-btn');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!validasi()) return;
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            try {
+                const data = new FormData(form);
+                const response = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    body: data
+                });
+                loading.style.display = 'none';
+                if (response.ok) {
+                    form.reset();
+                    thankyouMessage.style.display = 'block';
+                    setTimeout(() => {
+                        thankyouMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+        // Mobile navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const dropdowns = document.querySelectorAll('.dropdown');
+            // Toggle mobile menu
+            mobileNavToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                header.classList.toggle('nav-open');
+                mobileNavToggle.querySelector('i').classList.toggle('fa-bars');
+                mobileNavToggle.querySelector('i').classList.toggle('fa-times');
+            });
+            // Handle dropdown clicks
+            dropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('.dropdown-button');
+                button.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!header.contains(e.target) && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    header.classList.remove('nav-open');
+                    mobileNavToggle.querySelector('i').classList.remove('fa-times');
+                    mobileNavToggle.querySelector('i').classList.add('fa-bars');
+                    dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
